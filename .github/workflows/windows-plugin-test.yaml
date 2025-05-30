@@ -44,7 +44,7 @@ jobs:
           $distros = (Invoke-RestMethod -Uri https://raw.githubusercontent.com/microsoft/WSL/refs/heads/master/distributions/DistributionInfo.json).Distributions
           $distroDownloadUrl = $distros.Where({ $_.Name -eq 'Ubuntu' }).Amd64PackageUrl
           Set-Location $env:GITHUB_WORKSPACE\..\.. 
-          $filename = "${{ inputs.distro }}$([System.IO.Path]::GetExtension($distroDownloadUrl))"
+          $filename = "Ubuntu$([System.IO.Path]::GetExtension($distroDownloadUrl))"
           Invoke-WebRequest -Uri $distroDownloadUrl -OutFile $filename
           Expand-Archive -Path $filename -DestinationPath .\
           $distroExe = (Get-ChildItem -Path . -Filter *.exe).Where({ $_.Name -notmatch 'splash|setup' }).FullName
