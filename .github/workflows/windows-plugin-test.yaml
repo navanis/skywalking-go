@@ -38,6 +38,9 @@ jobs:
           Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
           Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 
+          wsl --set-default-version 2
+          wsl --update
+          
           $distros = (Invoke-RestMethod -Uri https://raw.githubusercontent.com/microsoft/WSL/refs/heads/master/distributions/DistributionInfo.json).Distributions
           $distroDownloadUrl = $distros.Where({ $_.Name -eq 'Ubuntu' }).Amd64PackageUrl
           Set-Location $env:GITHUB_WORKSPACE\..\.. 
@@ -46,9 +49,6 @@ jobs:
           Expand-Archive -Path $filename -DestinationPath .\
           $distroExe = (Get-ChildItem -Path . -Filter *.exe).Where({ $_.Name -notmatch 'splash|setup' }).FullName
           & $distroExe install --root
-          
-          wsl --set-default-version 2
-          wsl --update
           
           @'
           @echo off
