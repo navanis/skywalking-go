@@ -17,4 +17,4 @@ jobs:
 
       - name: Run a Linux container
         run: |
-          docker run --rm ubuntu:22.04 bash -c "echo Hello from Linux container! && uname -a"
+          docker run --rm --platform=linux ubuntu:22.04 bash -c "echo Hello from Linux container! && uname -a"
