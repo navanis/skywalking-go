@@ -5,16 +5,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: windows-latest
+  build:
+    runs-on: windows-2025
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify Docker version
-        run: docker version
-
-      - name: Run a Linux container
+      - name: Enable WSL (if needed)
         run: |
-          docker run --rm --platform=linux ubuntu:22.04 bash -c "echo Hello from Linux container! && uname -a"
+          wsl --install
+        shell: powershell
+
+      - name: Check WSL
+        run: wsl --status
+
+      - name: Run command in WSL (Ubuntu)
+        run: |
+          wsl -d Ubuntu -- bash -c "echo 'Hello from WSL2'; ls -la"
+
+      - name: Run your script
+        run: |
+          wsl -d Ubuntu -- bash -c "your-command-here"
