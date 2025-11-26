@@ -30,3 +30,9 @@ jobs:
 
       - name: Check Docker version
         run: docker --version
+
+      - name: Pull a Linux image to verify Docker works
+        run: docker pull alpine:latest
+
+      - name: Run Linux container test
+        run: docker run --rm alpine:latest uname -a
