@@ -1,6 +1,7 @@
 name: Setup Docker with WSL2 on Windows-2025
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
@@ -22,11 +23,16 @@ jobs:
         shell: powershell
 
       - name: Wait for Docker to be ready
+        shell: powershell
         run: |
-          for ($i=0; $i -lt 30; $i++) {
-            docker info && break
-            Start-Sleep -Seconds 3
-          }
+            for ($i = 0; $i -lt 30; $i++) {
+              if (docker info) {
+                Write-Host "Docker is ready."
+                break
+              }
+              Write-Host "Waiting for Docker..."
+              Start-Sleep -Seconds 3
+            }
 
       - name: Check Docker version
         run: docker --version
