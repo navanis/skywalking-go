@@ -27,7 +27,8 @@ jobs:
         run: |
           $dd = "C:/Program Files/Docker/Docker/resources/bin"
           echo "$dd" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
+      - name: Check docker location
+        run: where docker
       - name: Wait for Docker to be ready
         shell: powershell
         run: |
