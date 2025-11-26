@@ -1,24 +1,32 @@
-name: Windows run Linux container
+name: Setup Docker with WSL2 on Windows-2025
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
-  build:
+  setup-docker:
     runs-on: windows-2025
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Check WSL
-        run: wsl --status
-
-      - name: Run command in WSL (Ubuntu)
+      - name: Download Docker Desktop Installer
         run: |
-          wsl -d -- bash -c "echo 'Hello from WSL2'; ls -la"
+          curl.exe -L -o docker-desktop.exe "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
 
-      - name: Run your script
+      - name: Install Docker Desktop silently (with WSL backend)
         run: |
-          wsl -d -- bash -c "your-command-here"
+          ./docker-desktop.exe install --quiet --backend=wsl-2
+
+      - name: Start Docker Desktop
+        run: |
+          "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'" | Out-Null
+        shell: powershell
+
+      - name: Wait for Docker to be ready
+        run: |
+          for ($i=0; $i -lt 30; $i++) {
+            docker info && break
+            Start-Sleep -Seconds 3
+          }
+
+      - name: Check Docker version
+        run: docker --version
