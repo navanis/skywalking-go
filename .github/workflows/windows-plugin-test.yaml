@@ -12,18 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable WSL (if needed)
-        run: |
-          wsl --install
-        shell: powershell
-
       - name: Check WSL
         run: wsl --status
 
       - name: Run command in WSL (Ubuntu)
         run: |
-          wsl -d Ubuntu -- bash -c "echo 'Hello from WSL2'; ls -la"
+          wsl -d -- bash -c "echo 'Hello from WSL2'; ls -la"
 
       - name: Run your script
         run: |
-          wsl -d Ubuntu -- bash -c "your-command-here"
+          wsl -d -- bash -c "your-command-here"
