@@ -30,6 +30,7 @@ jobs:
       - name: Start Docker Desktop
         run: |
           "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'"
+          Test-Path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
         shell: powershell
 
       - name: Override PATH to use Docker Desktop's docker
