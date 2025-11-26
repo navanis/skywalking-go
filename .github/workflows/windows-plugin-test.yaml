@@ -35,7 +35,7 @@ jobs:
       - name: Override PATH to use Docker Desktop's docker
         shell: powershell
         run: |
-          Get-ChildItem "C:/Program Files/Docker" -Directory -Recurse
+          ls "C:/Program Files/Docker"
           $dd = "C:/Program Files/Docker/Docker/resources/bin"
           echo "$dd" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
