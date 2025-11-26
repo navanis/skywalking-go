@@ -22,6 +22,12 @@ jobs:
           "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'" | Out-Null
         shell: powershell
 
+      - name: Override PATH to use Docker Desktop's docker
+        shell: powershell
+        run: |
+          $dd = "C:/Program Files/Docker/Docker/resources/bin"
+          echo "$dd" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Wait for Docker to be ready
         shell: powershell
         run: |
