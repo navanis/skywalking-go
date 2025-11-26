@@ -9,6 +9,16 @@ jobs:
     runs-on: windows-2025
 
     steps:
+      - name: Remove system Docker (Docker CE)
+        shell: powershell
+        run: |
+          $dockerPath = "C:\Windows\system32\docker.exe"
+          if (Test-Path $dockerPath) {
+              Rename-Item -Path $dockerPath -NewName "docker.exe.bak"
+              Write-Host "System Docker renamed to docker.exe.bak"
+          } else {
+              Write-Host "No system Docker found"
+          }
       - name: Download Docker Desktop Installer
         run: |
           curl.exe -L -o docker-desktop.exe "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
