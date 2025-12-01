@@ -30,7 +30,7 @@ jobs:
 
       - name: Start Docker Desktop
         run: |
-          & "C:\Program Files\Docker\Docker\Docker Desktop.exe" "--switch-linux"
+          "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'"
         shell: powershell
 
       - name: Override PATH to use Docker Desktop's docker
@@ -58,7 +58,9 @@ jobs:
         run: docker --version
 
       - name: Pull a Linux image to verify Docker works
-        run: docker pull --platform linux alpine:latest
+        run: |
+              docker info
+              docker pull --platform linux alpine:latest
 
       - name: Run Linux container test
         run: docker run --rm alpine:latest uname -a
