@@ -33,6 +33,10 @@ jobs:
         run: |
           "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'"
           Test-Path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+          Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Docker Desktop" | Select-Object InstallLocation
+          wsl -l -v
+          wsl -d docker-desktop
+          which docker
         shell: powershell
 
       - name: Override PATH to use Docker Desktop's docker
