@@ -28,6 +28,7 @@ jobs:
         run: |
           if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
           ./docker-desktop.exe install --quiet --backend=wsl-2 --install-location "C:\Program Files\Docker"      
+          Start-Sleep -Seconds 10
 
       - name: Start Docker Desktop
         run: |
