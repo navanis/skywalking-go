@@ -40,7 +40,6 @@ jobs:
         shell: powershell
         run: |
           ls "C:/Program Files/Docker/Docker/resources/bin"
-          ls "C:/Program Files/Docker/Docker/Docker/resources/bin"
           ls "C:/Program Files/Docker/Docker"
           $dd = "C:/Program Files/Docker/Docker/resources/bin"
           echo "$dd" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
