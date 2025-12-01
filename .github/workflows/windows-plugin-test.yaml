@@ -22,25 +22,20 @@ jobs:
       - name: Download Docker Desktop Installer
         run: |
           curl.exe -L -o docker-desktop.exe "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
-          if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
 
       - name: Install Docker Desktop silently (with WSL backend)
         run: |
-          if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
           ./docker-desktop.exe install --quiet --backend=wsl-2 --install-location "C:\Program Files\Docker"      
           Start-Sleep -Seconds 120
 
       - name: Start Docker Desktop
         run: |
           "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'"
-          Test-Path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
         shell: powershell
 
       - name: Override PATH to use Docker Desktop's docker
         shell: powershell
         run: |
-          ls "C:/Program Files/Docker/Docker/resources/bin"
-          ls "C:/Program Files/Docker/Docker"
           $dd = "C:/Program Files/Docker/Docker/resources/bin"
           echo "$dd" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
@@ -63,7 +58,7 @@ jobs:
         run: docker --version
 
       - name: Pull a Linux image to verify Docker works
-        run: docker pull alpine:latest
+        run: docker pull --platform linux alpine:latest
 
       - name: Run Linux container test
         run: docker run --rm alpine:latest uname -a
