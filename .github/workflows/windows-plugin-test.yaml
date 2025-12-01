@@ -27,16 +27,12 @@ jobs:
       - name: Install Docker Desktop silently (with WSL backend)
         run: |
           if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
-          ./docker-desktop.exe install --quiet --backend=wsl-2
+          ./docker-desktop.exe install --quiet --backend=wsl-2 --install-location "C:\Program Files\Docker"      
 
       - name: Start Docker Desktop
         run: |
           "& 'C:/Program Files/Docker/Docker/Docker Desktop.exe'"
           Test-Path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-          Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Docker Desktop" | Select-Object InstallLocation
-          wsl -l -v
-          wsl -d docker-desktop
-          which docker
         shell: powershell
 
       - name: Override PATH to use Docker Desktop's docker
