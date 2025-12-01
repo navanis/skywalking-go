@@ -22,9 +22,11 @@ jobs:
       - name: Download Docker Desktop Installer
         run: |
           curl.exe -L -o docker-desktop.exe "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+          if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
 
       - name: Install Docker Desktop silently (with WSL backend)
         run: |
+          if (-not (Test-Path "./docker-desktop.exe")) { Write-Error "Docker Desktop installer download failed" }
           ./docker-desktop.exe install --quiet --backend=wsl-2
 
       - name: Start Docker Desktop
