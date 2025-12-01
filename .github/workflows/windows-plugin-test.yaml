@@ -60,6 +60,7 @@ jobs:
       - name: Pull a Linux image to verify Docker works
         run: |
               docker info
+              wsl -l -v          
               docker pull --platform linux alpine:latest
 
       - name: Run Linux container test
